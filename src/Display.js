@@ -132,18 +132,18 @@ const Display = () => {
           {/* Main Content */}
           <div className="container-fluid d-flex align-items-center flex-grow-1">
             <div className="row w-100">
-              <div className="col-12 p-4 border rounded shadow bg-light text-center overflow-auto">
+              {/* <div className="col-12 p-4 border rounded shadow bg-light text-center overflow-auto"> */}
                 {/* Question Header */}
-                <h2 className="text-primary">{question.name}</h2>
-                <p className="lead">{question.question}</p>
+                {/* <h2 className="text-primary">{question.name}</h2>
+                <p className="lead">{question.question}</p> */}
 
                 {/* Image Display */}
                 {question.image && (
                   <div className="d-flex justify-content-center my-3">
                     <img
                       src={`https://lh3.googleusercontent.com/d/${question.image}=w1000`}
-                      height="500"
-                      width="500"
+                      height="100%"
+                      width="100%"
                       className="img-fluid rounded"
                       alt="Question"
                     />
@@ -235,7 +235,7 @@ const Display = () => {
                 )} */}
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </div>
       ) : (
         <div className="container text-center mt-5">
