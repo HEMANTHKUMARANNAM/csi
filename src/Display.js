@@ -131,81 +131,81 @@ const Display = () => {
 
 
 
-  if (!(timer > 0)) {
+  // if (!(timer > 0)) {
 
 
 
-    return (
-      <>
+  //   return (
+  //     <>
 
-        <nav className="navbar bg-body-tertiary">
-          <div className="container-fluid d-flex">
-            <span className="navbar-brand mb-0 h1">
-              "CSI QUIZ"
-            </span>
-          </div>
-        </nav>
+  //       <nav className="navbar bg-body-tertiary">
+  //         <div className="container-fluid d-flex">
+  //           <span className="navbar-brand mb-0 h1">
+  //             CSI QUIZ
+  //           </span>
+  //         </div>
+  //       </nav>
 
-        <div className="mt-4 d-flex flex-column align-items-center">
-          <h3 className="text-success">Results</h3>
-          {responses.length > 0 ? (
-            <div className="table-responsive w-75">
-              <table className="table table-bordered table-striped text-center">
-                <thead className="thead-dark">
-                  <tr>
-                    <th>User</th>
-                    <th>Response</th>
-                    <th>Response Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {responses.map((res, index) => {
-                    const timestamp = new Date(res.lastSubmitted);
-                    return (
-                      <tr key={index}>
-                        <td>{res.name}</td>
-                        <td>{res.response}</td>
-                        <td>
-                          {timestamp.toLocaleTimeString()}:{timestamp.getMilliseconds()}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <p className="text-center text-muted mt-3">No responses recorded.</p>
-          )}
-        </div>
+  //       <div className="mt-4 d-flex flex-column align-items-center">
+  //         <h3 className="text-success">Results</h3>
+  //         {responses.length > 0 ? (
+  //           <div className="table-responsive w-75">
+  //             <table className="table table-bordered table-striped text-center">
+  //               <thead className="thead-dark">
+  //                 <tr>
+  //                   <th>User</th>
+  //                   <th>Response</th>
+  //                   <th>Response Time</th>
+  //                 </tr>
+  //               </thead>
+  //               <tbody>
+  //                 {responses.map((res, index) => {
+  //                   const timestamp = new Date(res.lastSubmitted);
+  //                   return (
+  //                     <tr key={index}>
+  //                       <td>{res.name}</td>
+  //                       <td>{res.response}</td>
+  //                       <td>
+  //                         {timestamp.toLocaleTimeString()}:{timestamp.getMilliseconds()}
+  //                       </td>
+  //                     </tr>
+  //                   );
+  //                 })}
+  //               </tbody>
+  //             </table>
+  //           </div>
+  //         ) : (
+  //           <p className="text-center text-muted mt-3">No responses recorded.</p>
+  //         )}
+  //       </div>
 
         
 
-         {/* Options */}
-         <div className="container">
-                    <div className="row">
-                      {question.options.map((option, index) => (
-                        <div key={index} className="col-6 d-flex justify-content-center">
-                          <button
-                            className={`btn m-2 w-75 ${selectedOption === option ? "btn-warning" : "btn-outline-primary"
-                              }`}
-                            onClick={() => console.log(option)}
-                            disabled={timer === 0}
-                          >
-                            {option}
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+  //        {/* Options */}
+  //        <div className="container">
+  //                   <div className="row">
+  //                     {question.options.map((option, index) => (
+  //                       <div key={index} className="col-6 d-flex justify-content-center">
+  //                         <button
+  //                           className={`btn m-2 w-75 ${selectedOption === option ? "btn-warning" : "btn-outline-primary"
+  //                             }`}
+  //                           onClick={() => console.log(option)}
+  //                           disabled={timer === 0}
+  //                         >
+  //                           {option}
+  //                         </button>
+  //                       </div>
+  //                     ))}
+  //                   </div>
+  //                 </div>
 
 
 
 
-      </>
+  //     </>
 
-    );
-  }
+  //   );
+  // }
 
   return (
     <>
@@ -243,7 +243,7 @@ const Display = () => {
                   )}
 
                   {/* Timer Display */}
-                  <p className="fw-bold">Time remaining: {Math.round(timer)}s</p>
+                  {/* <p className="fw-bold">Time remaining: {Math.round(timer)}s</p> */}
 
                   {/* Options */}
                   <div className="container">

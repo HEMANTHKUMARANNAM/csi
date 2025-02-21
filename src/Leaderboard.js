@@ -3,13 +3,15 @@ import { ref, onValue, get, set } from 'firebase/database';
 import { database } from './firebase';
 import { AuthContext } from './AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaBell } from "react-icons/fa"; // Font Awesome Buzzer Icon
+
 import { useNavigate } from 'react-router-dom';
 
 const LeaderBoard = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [visibleQuestionIndex, setVisibleQuestionIndex] = useState(null);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(10000);
   const [question, setQuestion] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [lastSubmitted, setLastSubmitted] = useState(null);
@@ -43,22 +45,22 @@ const LeaderBoard = () => {
 
   useEffect(() => {
     if (visibleQuestionIndex === null || visibleQuestionIndex === -1) return;
-    
+
     const questionRef = ref(database, `questions/q${visibleQuestionIndex + 1}`);
     const questionStartTimeRef = ref(database, `questionStartTime/q${visibleQuestionIndex + 1}`);
     let countdown;
-    
+
     get(questionRef).then((snapshot) => {
       if (snapshot.exists()) setQuestion(snapshot.val());
     });
-    
+
     get(questionStartTimeRef).then((snapshot) => {
       const storedTime = snapshot.val();
       if (storedTime) {
-        setTimer(Math.max(30 - (Date.now() - storedTime) / 1000, 0));
+        setTimer(Math.max(1000 - (Date.now() - storedTime) / 1000, 0));
       } else {
         set(questionStartTimeRef, Date.now());
-        setTimer(30);
+        setTimer(1000);
       }
     });
 
@@ -77,42 +79,51 @@ const LeaderBoard = () => {
 
   useEffect(() => {
     if (!userKey || visibleQuestionIndex === null || visibleQuestionIndex === -1) return;
+  
     const submissionRef = ref(database, `submissions/q${visibleQuestionIndex + 1}/${userKey}`);
+  
     return onValue(submissionRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         setLastSubmitted(data.lastSubmitted);
         setSelectedOption(data.response);
+      } else {
+        // Reset lastSubmitted when a new question is visible
+        setLastSubmitted(null);
+        setSelectedOption(null);
       }
     });
   }, [userKey, visibleQuestionIndex]);
+  
 
   const handleSubmit = () => {
-    
-    if (!selectedOption || !userKey || selectedOption === lastSubmitted) return;
+
+    if (!userKey) return;
     const submissionRef = ref(database, `submissions/q${visibleQuestionIndex + 1}/${userKey}`);
     set(submissionRef, {
       lastSubmitted: Date.now(),
-      response: selectedOption,
+      // response: selectedOption,
       name: mails[userKey],
     });
+    setLastSubmitted(Date.now());
+
   };
-  
+
 
   if (userloading) return <div className="text-center">Loading user data...</div>;
   if (!Object.keys(mails).includes(userKey)) return (
     <>
-    <nav className="navbar bg-body-tertiary">
-    <div className="container-fluid d-flex">
-      <span className="navbar-brand mb-0 h1">{"NOT VALID TEAM"}</span>
-      {user?.photoURL && (
-        <img src={user.photoURL} alt="User" className="rounded-circle ms-auto" width="40" height="40" onClick={() => navigate("/profile")} />
-      )}
-    </div>
-  </nav>
-    <div className="container text-center mt-5">
-      <h2>NOT A VALID MAIL</h2>
-    </div>
+      <nav className="navbar bg-body-tertiary">
+        <div className="container-fluid d-flex">
+          <span className="navbar-brand mb-0 h1">{"NOT VALID TEAM"}</span>
+          {user?.photoURL && (
+            <img src={user.photoURL} alt="User" className="rounded-circle ms-auto" width="40" height="40" onClick={() => navigate("/profile")} />
+          )}
+        </div>
+      </nav>
+      <div className="container text-center mt-5">
+        <h2>NOT A VALID MAIL</h2>
+      </div>
     </>
   );
 
@@ -131,21 +142,30 @@ const LeaderBoard = () => {
           <div className="col-12 p-4 border rounded shadow bg-light text-center overflow-auto">
             {question ? (
               <>
-                <h2 className="text-primary">{question.name}</h2>
-                <p className="lead">{question.question}</p>
-                {question.image && <img src={`https://lh3.googleusercontent.com/d/${question.image}=w1000`} height="170" width="170" className="img-fluid rounded" alt="Question" />}
-                <p className="fw-bold">Time remaining: {timer}s</p>
-                <div className="container">
+                {/* <h2 className="text-primary">{question.name}</h2> */}
+                {/* <p className="lead">{question.question}</p> */}
+                {/* {question.image && <img src={`https://lh3.googleusercontent.com/d/${question.image}=w1000`} height="170" width="170" className="img-fluid rounded" alt="Question" />} */}
+                {/* <p className="fw-bold">Time remaining: {timer}s</p> */}
+                {/* <div className="container">
                   <div className="row">
                     {question.options.map((option, index) => (
                       <div key={index} className="col-6 d-flex justify-content-center">
-                        <button className={`btn m-2 w-75 ${selectedOption === option ? "btn-warning" : "btn-outline-primary"}`} onClick={() => setSelectedOption(option)} disabled={timer === 0}>{option}</button>
+                        <button className={`btn m-2 w-75 ${"btn-outline-primary"}`} onClick={() => setSelectedOption(option)} disabled={timer === 0}>{option}</button>
                       </div>
                     ))}
                   </div>
+                </div> */}
+                {timer > 0 && lastSubmitted == null && <button
+  className="bg-red-500 hover:bg-red-700 text-white font-bold text-2xl rounded-full w-40 h-40 flex items-center justify-center shadow-lg mt-3"
+  onClick={handleSubmit}
+>
+  <FaBell size={50} /> {/* Adjust size as needed */}
+  BUZZER
+</button>}
+                {lastSubmitted && <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-lg border border-red-300 shadow-md">
+                  <p className="font-semibold text-center">🚨 Already Pressed Buzzer 🚨</p>
                 </div>
-                {timer > 0 && <button className="btn btn-success mt-3 w-75" onClick={handleSubmit}>Submit</button>}
-                {lastSubmitted && <p className="mt-2">Last submitted: {new Date(lastSubmitted).toLocaleTimeString()}</p>}
+                }
               </>
             ) : <p>No question currently displayed</p>}
           </div>

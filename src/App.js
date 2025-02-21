@@ -4,6 +4,7 @@ import LeaderBoard from './Leaderboard';
 import TeamPointsBoard from './Admin';
 import Profile from './Profile';
 import Display from './Display';
+import Responses from './Responses';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/admin" element={ <TeamPointsBoard />} />
         <Route path="/profile" element={ <Profile />} />
         <Route path="/display" element={ <Display />} />
+        <Route path="/responses" element={ <Responses />} />
 
         {/* Redirect all other routes to /leaderboard */}
         <Route path="*" element={<Navigate to="/leaderboard" />} />
