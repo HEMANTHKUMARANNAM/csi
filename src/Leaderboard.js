@@ -79,9 +79,9 @@ const LeaderBoard = () => {
 
   useEffect(() => {
     if (!userKey || visibleQuestionIndex === null || visibleQuestionIndex === -1) return;
-  
+
     const submissionRef = ref(database, `submissions/q${visibleQuestionIndex + 1}/${userKey}`);
-  
+
     return onValue(submissionRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
@@ -94,7 +94,7 @@ const LeaderBoard = () => {
       }
     });
   }, [userKey, visibleQuestionIndex]);
-  
+
 
   const handleSubmit = () => {
 
@@ -156,12 +156,12 @@ const LeaderBoard = () => {
                   </div>
                 </div> */}
                 {timer > 0 && lastSubmitted == null && <button
-  className="bg-red-500 hover:bg-red-700 text-white font-bold text-2xl rounded-full w-40 h-40 flex items-center justify-center shadow-lg mt-3"
-  onClick={handleSubmit}
->
-  <FaBell size={50} /> {/* Adjust size as needed */}
-  BUZZER
-</button>}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold text-2xl rounded-full w-40 h-40 flex items-center justify-center shadow-lg mt-3"
+                  onClick={handleSubmit}
+                >
+                  <FaBell size={50} /> {/* Adjust size as needed */}
+                  BUZZER
+                </button>}
                 {lastSubmitted && <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-lg border border-red-300 shadow-md">
                   <p className="font-semibold text-center">🚨 Already Pressed Buzzer 🚨</p>
                 </div>
