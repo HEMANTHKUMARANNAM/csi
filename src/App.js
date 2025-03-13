@@ -11,7 +11,7 @@ function App() {
     <Router basename='/csi/'>
       <Routes>
         {/* Public Routes */}
-        <Route path="/leaderboard" element={ <LeaderBoard />} />
+        <Route path="/student" element={ <LeaderBoard />} />
         <Route path="/admin" element={ <TeamPointsBoard />} />
         <Route path="/profile" element={ <Profile />} />
         <Route path="/display" element={ <Display />} />

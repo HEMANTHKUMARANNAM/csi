@@ -5,6 +5,10 @@ import { AuthContext } from './AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaBell } from "react-icons/fa"; // Font Awesome Buzzer Icon
 
+import { Image } from 'react-bootstrap';
+
+import buzzer from './buzzer.png';
+
 import { useNavigate } from 'react-router-dom';
 
 const LeaderBoard = () => {
@@ -139,7 +143,7 @@ const LeaderBoard = () => {
       </nav>
       <div className="container-fluid d-flex align-items-center flex-grow-1">
         <div className="row w-100">
-          <div className="col-12 p-4 border rounded shadow bg-light text-center overflow-auto">
+          <div className="col-12 p-4 border rounded shadow bg-light text-center overflow-auto  "  >
             {question ? (
               <>
                 {/* <h2 className="text-primary">{question.name}</h2> */}
@@ -155,17 +159,45 @@ const LeaderBoard = () => {
                     ))}
                   </div>
                 </div> */}
-                {timer > 0 && lastSubmitted == null && <button
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold text-2xl rounded-full w-40 h-40 flex items-center justify-center shadow-lg mt-3"
-                  onClick={handleSubmit}
-                >
-                  <FaBell size={50} /> {/* Adjust size as needed */}
-                  BUZZER
-                </button>}
+{/* 
+                {timer > 0 && lastSubmitted == null &&
+
+                <Image
+
+                src={buzzer}
+
+                height={"130px"}
+
+                width={"130px"}
+
+                onClick={handleSubmit}
+                
+                />
+                
+                }
                 {lastSubmitted && <div className="mt-4 p-3 bg-red-100 text-red-800 rounded-lg border border-red-300 shadow-md">
                   <p className="font-semibold text-center">🚨 Already Pressed Buzzer 🚨</p>
                 </div>
-                }
+                } */}
+
+{timer > 0 && lastSubmitted == null && (
+  <div className="d-flex justify-content-center mt-3">
+    <Image
+      src={buzzer}
+      height="130px"
+      width="130px"
+      className="cursor-pointer transition transform hover:scale-110 active:scale-90 shadow-lg rounded-circle"
+      onClick={handleSubmit}
+    />
+  </div>
+)}
+
+{lastSubmitted && (
+  <div className="mt-4 p-3 bg-danger text-white rounded-lg border border-dark shadow-md text-center">
+    <p className="fw-bold">🚨 You have already pressed the buzzer! 🚨</p>
+  </div>
+)}
+
               </>
             ) : <p>No question currently displayed</p>}
           </div>

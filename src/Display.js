@@ -18,21 +18,21 @@ const Display = () => {
   useEffect(() => {
     const visibilityRef = ref(database, 'visibility');
     const answerRef = ref(database, 'answer');
-  
+
     const unsubscribeVisibility = onValue(visibilityRef, (snapshot) => {
       setVisibleQuestionIndex(snapshot.exists() ? snapshot.val() : -1);
     });
-  
+
     const unsubscribeAnswer = onValue(answerRef, (snapshot) => {
       setanswerdisplay(snapshot.exists() ? snapshot.val() : 0);
     });
-  
+
     return () => {
       unsubscribeVisibility();
       unsubscribeAnswer();
     };
   }, []);
-  
+
 
   // Fetch Teams Data
   useEffect(() => {
@@ -92,7 +92,7 @@ const Display = () => {
     }, 1000);
 
     return () => clearInterval(countdown);
-  }, [visibleQuestionIndex, answerdisplay ]);
+  }, [visibleQuestionIndex, answerdisplay]);
 
   // Fetch Responses when Timer Ends
   useEffect(() => {
@@ -121,121 +121,48 @@ const Display = () => {
   return (
     <>
       {visibleQuestionIndex !== -1 && question ? (
-        <div className="vh-100 d-flex flex-column">
-          {/* Navbar */}
-          {/* <nav className="navbar bg-body-tertiary">
-            <div className="container-fluid d-flex">
-              <span className="navbar-brand mb-0 h1">CSI QUIZ</span>
+        <div className="vh-100 d-flex flex-column" style={ { backgroundColor:"#f2f2f2" } } >
+
+
+
+          {/* Image Display */}
+          {question.image && (
+            <div className="d-flex justify-content-center align-items-center vh-100">
+              <img
+                src={`https://lh3.googleusercontent.com/d/${question.image}=w1000`}
+                className="img-fluid rounded"
+                style={{ maxWidth: "100vw", maxHeight: "100vh", objectFit: "contain" }}
+                alt="Question"
+              />
             </div>
-          </nav> */}
+          )}
 
-          {/* Main Content */}
-          <div className="container-fluid d-flex align-items-center flex-grow-1">
-            <div className="row w-100">
-              {/* <div className="col-12 p-4 border rounded shadow bg-light text-center overflow-auto"> */}
-                {/* Question Header */}
-                {/* <h2 className="text-primary">{question.name}</h2>
-                <p className="lead">{question.question}</p> */}
+          {/* Options */}
+          <div className="container">
+            <div className="row">
+              {
+                answerdisplay === 0 ?
+                  (
 
-                {/* Image Display */}
-                {question.image && (
-                  <div className="d-flex justify-content-center my-3">
-                    <img
-                      src={`https://lh3.googleusercontent.com/d/${question.image}=w1000`}
-                      height="100%"
-                      width="100%"
-                      className="img-fluid rounded"
-                      alt="Question"
-                    />
-                  </div>
-                )}
 
-                {/* Timer Display */}
-                {/* <p className="fw-bold">Time remaining: {Math.round(timer)}s</p> */}
+                    <>
 
-                {/* Options */}
-                <div className="container">
-                  <div className="row">
-                  {
-                    answerdisplay ===0 ?
-                    (
+                    </>
 
-                      // question.options.map((option, index) => (
-                      //   <div key={index} className="col-6 d-flex justify-content-center">
-                      //     <button
-                      //       className="btn m-2 w-75 btn-outline-primary"
-                      //       onClick={() => console.log(option)}
-                      //       disabled={timer === 0}
-                      //     >
-                      //       {option}
-                      //     </button>
-                      //   </div>
-                      // ))
-                      <>
-                      </>
+                  ) :
+                  (
 
-                    ):
-                    (
 
-                      // question.options.map((option, index) => (
-                      //   <div key={index} className="col-6 d-flex justify-content-center">
-                      //     <button
-                      //       className="btn m-2 w-75 btn-outline-primary"
-                      //       onClick={() => console.log(option)}
-                      //       disabled={timer === 0}
-                      //     >
-                      //       {option}
-                      //     </button>
-                      //   </div>
-                      // ))
 
-                      <p>meow</p>
+                    <p>meow</p>
 
-                    )
+                  )
 
-                  }
-                    
-                  </div>
-                </div>
+              }
 
-                {/* Show Responses if Timer is 0 */}
-                {/* {timer === 0 && (
-                  <div className="mt-4">
-                    <h3 className="text-success">Results</h3>
-                    {responses.length > 0 ? (
-                      <div className="table-responsive w-75 mx-auto">
-                        <table className="table table-bordered table-striped text-center">
-                          <thead className="thead-dark">
-                            <tr>
-                              <th>User</th>
-                              <th>Response</th>
-                              <th>Response Time</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {responses.map((res, index) => {
-                              const timestamp = new Date(res.lastSubmitted);
-                              return (
-                                <tr key={index}>
-                                  <td>{res.name}</td>
-                                  <td>{res.response}</td>
-                                  <td>
-                                    {timestamp.toLocaleTimeString()}:{timestamp.getMilliseconds()}
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    ) : (
-                      <p className="text-muted mt-3">No responses recorded.</p>
-                    )}
-                  </div>
-                )} */}
-              </div>
             </div>
-          {/* </div> */}
+          </div>
+
         </div>
       ) : (
         <div className="container text-center mt-5">

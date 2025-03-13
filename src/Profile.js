@@ -4,7 +4,7 @@ import { FaSignInAlt, FaUser } from "react-icons/fa"; // Default icon
 import { AuthContext } from "./AuthContext";
 import LoadingScreen from "./LoadingScreen";
 import { useNavigate } from "react-router-dom";
-// import sigin from '../assets/rb_936.png';  // Make sure this path is correct
+import sigin from './rb_936.png';  // Make sure this path is correct
 
 
 const Profile = () => {
@@ -77,7 +77,7 @@ const Profile = () => {
               <div
                 className="col-md-6 p-0"
                 style={{
-                  // backgroundImage: `url()`,  // Correct background image syntax
+                  backgroundImage: `url(${sigin})`,  // Correct background image syntax
                   backgroundSize: 'cover',  // Make the image cover the div
                   backgroundPosition: 'center', // Center the image
                   height: '100%', // Ensure the height takes up the full viewport
